@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StudentEvolutionSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="assign_fac_sub">
+          <Key>
+            <PropertyRef Name="fac_id" />
+          </Key>
+          <Property Name="fac_id" Type="int" Nullable="false" />
+          <Property Name="sub" Type="varchar" MaxLength="500" />
+          <Property Name="m_id" Type="int" />
+        </EntityType>
+        <EntityType Name="assign_fac_sub_batch">
+          <Key>
+            <PropertyRef Name="fac_id" />
+          </Key>
+          <Property Name="fac_id" Type="int" Nullable="false" />
+          <Property Name="sub" Type="varchar" MaxLength="500" />
+          <Property Name="m_id" Type="int" />
+          <Property Name="batch" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="assign_task">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="int" Nullable="false" />
+          <Property Name="m_id" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="grade" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="sub" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="isassign" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="faculty_login">
+          <Key>
+            <PropertyRef Name="fac_id" />
+          </Key>
+          <Property Name="fac_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="contactno" Type="int" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mentor_login">
+          <Key>
+            <PropertyRef Name="m_id" />
+          </Key>
+          <Property Name="m_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_id" Type="int" Nullable="false" />
+          <Property Name="f_id" Type="int" Nullable="false" />
+          <Property Name="sem" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sa_login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sem_sub">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sem" Type="int" Nullable="false" />
+          <Property Name="sub" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sub_code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="iselective" Type="int" Nullable="false" />
+          <Property Name="isActive" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'StudentEvolutionSystem.dbo.student_batch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="student_batch">
+          <Key>
+            <PropertyRef Name="enro_id" />
+            <PropertyRef Name="batch" />
+          </Key>
+          <Property Name="enro_id" Type="int" Nullable="false" />
+          <Property Name="batch" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student_login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="enro_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="500" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="email" Type="varchar" MaxLength="500" />
+          <Property Name="contact" Type="int" />
+          <Property Name="m_id" Type="int" />
+        </EntityType>
+        <EntityType Name="task_cheched">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="enro_id" Type="int" />
+          <Property Name="batch" Type="varchar" MaxLength="50" />
+          <Property Name="title" Type="varchar" MaxLength="1000" />
+          <Property Name="grade" Type="varchar" MaxLength="50" />
+          <Property Name="sub" Type="varchar" MaxLength="100" />
+          <Property Name="plagarisum" Type="int" />
+          <Property Name="sem" Type="int" />
+          <Property Name="f_id" Type="int" />
+        </EntityType>
+        <EntityType Name="task_checked_set">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="task_id" Type="int" />
+          <Property Name="p_id" Type="int" />
+          <Property Name="date" Type="date" />
+          <Property Name="checked" Type="int" />
+          <Property Name="location" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_assign_fac_sub_batch_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="0..1" />
+          <End Role="assign_fac_sub_batch" Type="Self.assign_fac_sub_batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="assign_fac_sub_batch">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_assign_fac_sub_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="0..1" />
+          <End Role="assign_fac_sub" Type="Self.assign_fac_sub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="assign_fac_sub">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_assign_task_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="1" />
+          <End Role="assign_task" Type="Self.assign_task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="assign_task">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mentor_login_faculty_login">
+          <End Role="faculty_login" Type="Self.faculty_login" Multiplicity="1" />
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty_login">
+              <PropertyRef Name="fac_id" />
+            </Principal>
+            <Dependent Role="mentor_login">
+              <PropertyRef Name="f_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_batch_student_login">
+          <End Role="student_login" Type="Self.student_login" Multiplicity="1" />
+          <End Role="student_batch" Type="Self.student_batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student_batch">
+              <PropertyRef Name="enro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_login_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="0..1" />
+          <End Role="student_login" Type="Self.student_login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="student_login">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_cheched_faculty_login">
+          <End Role="faculty_login" Type="Self.faculty_login" Multiplicity="0..1" />
+          <End Role="task_cheched" Type="Self.task_cheched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty_login">
+              <PropertyRef Name="fac_id" />
+            </Principal>
+            <Dependent Role="task_cheched">
+              <PropertyRef Name="f_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_cheched_student_login">
+          <End Role="student_login" Type="Self.student_login" Multiplicity="0..1" />
+          <End Role="task_cheched" Type="Self.task_cheched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task_cheched">
+              <PropertyRef Name="enro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_checked_set_assign_task">
+          <End Role="assign_task" Type="Self.assign_task" Multiplicity="0..1" />
+          <End Role="task_checked_set" Type="Self.task_checked_set" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assign_task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="task_checked_set">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentEvolutionSystemModelStoreContainer">
+          <EntitySet Name="assign_fac_sub" EntityType="Self.assign_fac_sub" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="assign_fac_sub_batch" EntityType="Self.assign_fac_sub_batch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="assign_task" EntityType="Self.assign_task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="faculty_login" EntityType="Self.faculty_login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mentor_login" EntityType="Self.mentor_login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sa_login" EntityType="Self.sa_login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sem_sub" EntityType="Self.sem_sub" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student_login" EntityType="Self.student_login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="task_cheched" EntityType="Self.task_cheched" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="task_checked_set" EntityType="Self.task_checked_set" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student_batch" EntityType="Self.student_batch" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [student_batch].[enro_id] AS [enro_id], 
+    [student_batch].[batch] AS [batch]
+    FROM [dbo].[student_batch] AS [student_batch]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_assign_fac_sub_batch_mentor_login" Association="Self.FK_assign_fac_sub_batch_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="assign_fac_sub_batch" EntitySet="assign_fac_sub_batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_assign_fac_sub_mentor_login" Association="Self.FK_assign_fac_sub_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="assign_fac_sub" EntitySet="assign_fac_sub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_assign_task_mentor_login" Association="Self.FK_assign_task_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="assign_task" EntitySet="assign_task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mentor_login_faculty_login" Association="Self.FK_mentor_login_faculty_login">
+            <End Role="faculty_login" EntitySet="faculty_login" />
+            <End Role="mentor_login" EntitySet="mentor_login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_batch_student_login" Association="Self.FK_student_batch_student_login">
+            <End Role="student_login" EntitySet="student_login" />
+            <End Role="student_batch" EntitySet="student_batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_login_mentor_login" Association="Self.FK_student_login_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="student_login" EntitySet="student_login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_cheched_faculty_login" Association="Self.FK_task_cheched_faculty_login">
+            <End Role="faculty_login" EntitySet="faculty_login" />
+            <End Role="task_cheched" EntitySet="task_cheched" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_cheched_student_login" Association="Self.FK_task_cheched_student_login">
+            <End Role="student_login" EntitySet="student_login" />
+            <End Role="task_cheched" EntitySet="task_cheched" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_checked_set_assign_task" Association="Self.FK_task_checked_set_assign_task">
+            <End Role="assign_task" EntitySet="assign_task" />
+            <End Role="task_checked_set" EntitySet="task_checked_set" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudentEvolutionSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="assign_fac_sub">
+          <Key>
+            <PropertyRef Name="fac_id" />
+          </Key>
+          <Property Name="fac_id" Type="Int32" Nullable="false" />
+          <Property Name="sub" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="m_id" Type="Int32" />
+          <NavigationProperty Name="mentor_login" Relationship="Self.FK_assign_fac_sub_mentor_login" FromRole="assign_fac_sub" ToRole="mentor_login" />
+        </EntityType>
+        <EntityType Name="assign_fac_sub_batch">
+          <Key>
+            <PropertyRef Name="fac_id" />
+          </Key>
+          <Property Name="fac_id" Type="Int32" Nullable="false" />
+          <Property Name="sub" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="m_id" Type="Int32" />
+          <Property Name="batch" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="mentor_login" Relationship="Self.FK_assign_fac_sub_batch_mentor_login" FromRole="assign_fac_sub_batch" ToRole="mentor_login" />
+        </EntityType>
+        <EntityType Name="assign_task">
+          <Key>
+            <PropertyRef Name="task_id" />
+          </Key>
+          <Property Name="task_id" Type="Int32" Nullable="false" />
+          <Property Name="m_id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="sub" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isassign" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="mentor_login" Relationship="Self.FK_assign_task_mentor_login" FromRole="assign_task" ToRole="mentor_login" />
+          <NavigationProperty Name="task_checked_set" Relationship="Self.FK_task_checked_set_assign_task" FromRole="assign_task" ToRole="task_checked_set" />
+        </EntityType>
+        <EntityType Name="faculty_login">
+          <Key>
+            <PropertyRef Name="fac_id" />
+          </Key>
+          <Property Name="fac_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contactno" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="mentor_login" Relationship="Self.FK_mentor_login_faculty_login" FromRole="faculty_login" ToRole="mentor_login" />
+          <NavigationProperty Name="task_cheched" Relationship="Self.FK_task_cheched_faculty_login" FromRole="faculty_login" ToRole="task_cheched" />
+        </EntityType>
+        <EntityType Name="mentor_login">
+          <Key>
+            <PropertyRef Name="m_id" />
+          </Key>
+          <Property Name="m_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_id" Type="Int32" Nullable="false" />
+          <Property Name="f_id" Type="Int32" Nullable="false" />
+          <Property Name="sem" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="assign_fac_sub" Relationship="Self.FK_assign_fac_sub_mentor_login" FromRole="mentor_login" ToRole="assign_fac_sub" />
+          <NavigationProperty Name="assign_fac_sub_batch" Relationship="Self.FK_assign_fac_sub_batch_mentor_login" FromRole="mentor_login" ToRole="assign_fac_sub_batch" />
+          <NavigationProperty Name="assign_task" Relationship="Self.FK_assign_task_mentor_login" FromRole="mentor_login" ToRole="assign_task" />
+          <NavigationProperty Name="faculty_login" Relationship="Self.FK_mentor_login_faculty_login" FromRole="mentor_login" ToRole="faculty_login" />
+          <NavigationProperty Name="student_login" Relationship="Self.FK_student_login_mentor_login" FromRole="mentor_login" ToRole="student_login" />
+        </EntityType>
+        <EntityType Name="sa_login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sem_sub">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sem" Type="Int32" Nullable="false" />
+          <Property Name="sub" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sub_code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iselective" Type="Int32" Nullable="false" />
+          <Property Name="isActive" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student_login">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="enro_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="Int32" />
+          <Property Name="m_id" Type="Int32" />
+          <NavigationProperty Name="mentor_login" Relationship="Self.FK_student_login_mentor_login" FromRole="student_login" ToRole="mentor_login" />
+          <NavigationProperty Name="student_batch" Relationship="Self.FK_student_batch_student_login" FromRole="student_login" ToRole="student_batch" />
+          <NavigationProperty Name="task_cheched" Relationship="Self.FK_task_cheched_student_login" FromRole="student_login" ToRole="task_cheched" />
+        </EntityType>
+        <EntityType Name="task_cheched">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="enro_id" Type="Int32" />
+          <Property Name="batch" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="grade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sub" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="plagarisum" Type="Int32" />
+          <Property Name="sem" Type="Int32" />
+          <Property Name="f_id" Type="Int32" />
+          <NavigationProperty Name="faculty_login" Relationship="Self.FK_task_cheched_faculty_login" FromRole="task_cheched" ToRole="faculty_login" />
+          <NavigationProperty Name="student_login" Relationship="Self.FK_task_cheched_student_login" FromRole="task_cheched" ToRole="student_login" />
+        </EntityType>
+        <EntityType Name="task_checked_set">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="task_id" Type="Int32" />
+          <Property Name="p_id" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="checked" Type="Int32" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="assign_task" Relationship="Self.FK_task_checked_set_assign_task" FromRole="task_checked_set" ToRole="assign_task" />
+        </EntityType>
+        <EntityType Name="student_batch">
+          <Key>
+            <PropertyRef Name="enro_id" />
+            <PropertyRef Name="batch" />
+          </Key>
+          <Property Name="enro_id" Type="Int32" Nullable="false" />
+          <Property Name="batch" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="student_login" Relationship="Self.FK_student_batch_student_login" FromRole="student_batch" ToRole="student_login" />
+        </EntityType>
+        <Association Name="FK_assign_fac_sub_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="0..1" />
+          <End Role="assign_fac_sub" Type="Self.assign_fac_sub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="assign_fac_sub">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_assign_fac_sub_batch_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="0..1" />
+          <End Role="assign_fac_sub_batch" Type="Self.assign_fac_sub_batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="assign_fac_sub_batch">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_assign_task_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="1" />
+          <End Role="assign_task" Type="Self.assign_task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="assign_task">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_checked_set_assign_task">
+          <End Role="assign_task" Type="Self.assign_task" Multiplicity="0..1" />
+          <End Role="task_checked_set" Type="Self.task_checked_set" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assign_task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="task_checked_set">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_mentor_login_faculty_login">
+          <End Role="faculty_login" Type="Self.faculty_login" Multiplicity="1" />
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty_login">
+              <PropertyRef Name="fac_id" />
+            </Principal>
+            <Dependent Role="mentor_login">
+              <PropertyRef Name="f_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_cheched_faculty_login">
+          <End Role="faculty_login" Type="Self.faculty_login" Multiplicity="0..1" />
+          <End Role="task_cheched" Type="Self.task_cheched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="faculty_login">
+              <PropertyRef Name="fac_id" />
+            </Principal>
+            <Dependent Role="task_cheched">
+              <PropertyRef Name="f_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_login_mentor_login">
+          <End Role="mentor_login" Type="Self.mentor_login" Multiplicity="0..1" />
+          <End Role="student_login" Type="Self.student_login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mentor_login">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="student_login">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_batch_student_login">
+          <End Role="student_login" Type="Self.student_login" Multiplicity="1" />
+          <End Role="student_batch" Type="Self.student_batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student_batch">
+              <PropertyRef Name="enro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_task_cheched_student_login">
+          <End Role="student_login" Type="Self.student_login" Multiplicity="0..1" />
+          <End Role="task_cheched" Type="Self.task_cheched" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_login">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="task_cheched">
+              <PropertyRef Name="enro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentEvolutionSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="assign_fac_sub" EntityType="Self.assign_fac_sub" />
+          <EntitySet Name="assign_fac_sub_batch" EntityType="Self.assign_fac_sub_batch" />
+          <EntitySet Name="assign_task" EntityType="Self.assign_task" />
+          <EntitySet Name="faculty_login" EntityType="Self.faculty_login" />
+          <EntitySet Name="mentor_login" EntityType="Self.mentor_login" />
+          <EntitySet Name="sa_login" EntityType="Self.sa_login" />
+          <EntitySet Name="sem_sub" EntityType="Self.sem_sub" />
+          <EntitySet Name="student_login" EntityType="Self.student_login" />
+          <EntitySet Name="task_cheched" EntityType="Self.task_cheched" />
+          <EntitySet Name="task_checked_set" EntityType="Self.task_checked_set" />
+          <EntitySet Name="student_batch" EntityType="Self.student_batch" />
+          <AssociationSet Name="FK_assign_fac_sub_mentor_login" Association="Self.FK_assign_fac_sub_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="assign_fac_sub" EntitySet="assign_fac_sub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_assign_fac_sub_batch_mentor_login" Association="Self.FK_assign_fac_sub_batch_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="assign_fac_sub_batch" EntitySet="assign_fac_sub_batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_assign_task_mentor_login" Association="Self.FK_assign_task_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="assign_task" EntitySet="assign_task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_checked_set_assign_task" Association="Self.FK_task_checked_set_assign_task">
+            <End Role="assign_task" EntitySet="assign_task" />
+            <End Role="task_checked_set" EntitySet="task_checked_set" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mentor_login_faculty_login" Association="Self.FK_mentor_login_faculty_login">
+            <End Role="faculty_login" EntitySet="faculty_login" />
+            <End Role="mentor_login" EntitySet="mentor_login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_cheched_faculty_login" Association="Self.FK_task_cheched_faculty_login">
+            <End Role="faculty_login" EntitySet="faculty_login" />
+            <End Role="task_cheched" EntitySet="task_cheched" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_login_mentor_login" Association="Self.FK_student_login_mentor_login">
+            <End Role="mentor_login" EntitySet="mentor_login" />
+            <End Role="student_login" EntitySet="student_login" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_batch_student_login" Association="Self.FK_student_batch_student_login">
+            <End Role="student_login" EntitySet="student_login" />
+            <End Role="student_batch" EntitySet="student_batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_task_cheched_student_login" Association="Self.FK_task_cheched_student_login">
+            <End Role="student_login" EntitySet="student_login" />
+            <End Role="task_cheched" EntitySet="task_cheched" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StudentEvolutionSystemModelStoreContainer" CdmEntityContainer="StudentEvolutionSystemEntities">
+          <EntitySetMapping Name="assign_fac_sub">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.assign_fac_sub">
+              <MappingFragment StoreEntitySet="assign_fac_sub">
+                <ScalarProperty Name="fac_id" ColumnName="fac_id" />
+                <ScalarProperty Name="sub" ColumnName="sub" />
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="assign_fac_sub_batch">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.assign_fac_sub_batch">
+              <MappingFragment StoreEntitySet="assign_fac_sub_batch">
+                <ScalarProperty Name="fac_id" ColumnName="fac_id" />
+                <ScalarProperty Name="sub" ColumnName="sub" />
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="assign_task">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.assign_task">
+              <MappingFragment StoreEntitySet="assign_task">
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="sub" ColumnName="sub" />
+                <ScalarProperty Name="isassign" ColumnName="isassign" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="faculty_login">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.faculty_login">
+              <MappingFragment StoreEntitySet="faculty_login">
+                <ScalarProperty Name="fac_id" ColumnName="fac_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contactno" ColumnName="contactno" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mentor_login">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.mentor_login">
+              <MappingFragment StoreEntitySet="mentor_login">
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+                <ScalarProperty Name="sem" ColumnName="sem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sa_login">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.sa_login">
+              <MappingFragment StoreEntitySet="sa_login">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sem_sub">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.sem_sub">
+              <MappingFragment StoreEntitySet="sem_sub">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="sem" ColumnName="sem" />
+                <ScalarProperty Name="sub" ColumnName="sub" />
+                <ScalarProperty Name="sub_code" ColumnName="sub_code" />
+                <ScalarProperty Name="iselective" ColumnName="iselective" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="student_login">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.student_login">
+              <MappingFragment StoreEntitySet="student_login">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enro_id" ColumnName="enro_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="task_cheched">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.task_cheched">
+              <MappingFragment StoreEntitySet="task_cheched">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="enro_id" ColumnName="enro_id" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="sub" ColumnName="sub" />
+                <ScalarProperty Name="plagarisum" ColumnName="plagarisum" />
+                <ScalarProperty Name="sem" ColumnName="sem" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="task_checked_set">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.task_checked_set">
+              <MappingFragment StoreEntitySet="task_checked_set">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="checked" ColumnName="checked" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="student_batch">
+            <EntityTypeMapping TypeName="StudentEvolutionSystemModel.student_batch">
+              <MappingFragment StoreEntitySet="student_batch">
+                <ScalarProperty Name="enro_id" ColumnName="enro_id" />
+                <ScalarProperty Name="batch" ColumnName="batch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

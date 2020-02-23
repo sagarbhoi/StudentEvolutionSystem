@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dab836910e0c4b738320d943cc2e7f44" Name="Diagram1" ZoomLevel="38">
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.assign_fac_sub" Width="1.5" PointX="5.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.assign_fac_sub_batch" Width="1.5" PointX="7.75" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.assign_task" Width="1.5" PointX="5.625" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.faculty_login" Width="1.5" PointX="2.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.mentor_login" Width="1.5" PointX="2.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.sa_login" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.sem_sub" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.student_login" Width="1.5" PointX="5.625" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.task_cheched" Width="1.5" PointX="2.875" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.task_checked_set" Width="1.5" PointX="7.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentEvolutionSystemModel.student_batch" Width="1.5" PointX="7.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_assign_fac_sub_mentor_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_assign_fac_sub_batch_mentor_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_assign_task_mentor_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_task_checked_set_assign_task" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_mentor_login_faculty_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_task_cheched_faculty_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_student_login_mentor_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_student_batch_student_login" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentEvolutionSystemModel.FK_task_cheched_student_login" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
