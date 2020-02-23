@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dab836910e0c4b738320d943cc2e7f44" Name="Diagram1" ZoomLevel="38">
+      <Diagram DiagramId="dab836910e0c4b738320d943cc2e7f44" Name="Diagram1" ZoomLevel="95">
         <EntityTypeShape EntityType="StudentEvolutionSystemModel.assign_fac_sub" Width="1.5" PointX="5.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="StudentEvolutionSystemModel.assign_fac_sub_batch" Width="1.5" PointX="7.75" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="StudentEvolutionSystemModel.assign_task" Width="1.5" PointX="5.625" PointY="2.5" IsExpanded="true" />
